@@ -1,0 +1,82 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct Book {
+    string title;
+    string author;
+    int publicationYear;
+    string genre;
+};
+
+void inputBooks(Book books[]) {
+    for (int i = 0; i < 6; i++) {
+        cout << "Enter details for Book you are Looking for " << i + 1 << ":" << endl;
+        cout << "Title of Book: ";
+        getline(cin, books[i].title);
+        cout << "Author of Book: ";
+        getline(cin, books[i].author);
+        cout << "Publication Year of Book: ";
+        cin >> books[i].publicationYear;
+        cin.ignore();
+        cout << "Genre: ";
+        getline(cin, books[i].genre);
+        cout << endl;
+    }
+}
+void categorizeBooks(Book books[], Book fiction[], Book nonFiction[]) {
+    int fictionCount = 0;
+    int nonFictionCount = 0;
+
+    for (int i = 0; i < 6; i++) {
+        if (books[i].genre == "Fiction") {
+            fiction[fictionCount] = books[i];
+            fictionCount++;
+        }
+        else {
+            nonFiction[nonFictionCount] = books[i];
+            nonFictionCount++;
+        }
+    }
+}
+void findEarliestPublicationYear(Book books[], int size) {
+    int earliestYear = books[0].publicationYear;
+
+    for (int i = 1; i < size; i++) {
+        if (books[i].publicationYear < earliestYear) {
+            earliestYear = books[i].publicationYear;
+        }
+    }
+
+    cout << "Earliest Publication Year: " << earliestYear << endl;
+}
+
+void displayBooks(Book books[], int size) {
+    for (int i = 0; i < size; i++) {
+        cout << "Title of Book : " << books[i].title << endl;
+        cout << "Author of Book : " << books[i].author << endl;
+        cout << "Publication Year of Book: " << books[i].publicationYear << endl;
+        cout << "Genre: " << books[i].genre << endl;
+        cout << endl;
+    }
+}
+
+int main() {
+    Book books[6];
+    Book fiction[6];
+    Book nonFiction[6];
+
+    inputBooks(books);
+    categorizeBooks(books, fiction, nonFiction);
+
+    cout << "Fiction Books:" << endl;
+    displayBooks(fiction, 6);
+    findEarliestPublicationYear(fiction, 6);
+
+    cout << "Non-Fiction Books:" << endl;
+    displayBooks(nonFiction, 6);
+    findEarliestPublicationYear(nonFiction, 6);
+
+    return 0;
+}
